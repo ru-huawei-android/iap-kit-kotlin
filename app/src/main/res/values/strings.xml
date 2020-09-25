@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">IAP Kit Kotlin</string>
+    <string name="force_a_crash">force a crash</string>
+</resources>

@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.huawei.codelabs.iap.example.huawei"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 3
+        versionName "1.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+     //   buildConfigField ("String", "IAPKEY", getIAPKey())
+    }
+    signingConfigs {
+        release {
+            storeFile file("HuaweiSampleKey.jks")
+            storePassword "HuaweiSampleKey"
+            keyAlias "HuaweiSampleKey"
+            keyPassword "HuaweiSampleKey"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        release {
+            debuggable true
+            minifyEnabled false
+            proguardFile 'proguard-project.txt'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    // Нужно добавить SHA256 сертификата которым вы подписываете приложение в вашем Web-интерфейсе
+    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect
+
+    // Не забудьте включить соответствующие Kits в вашем Web-интерфейсе
+    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/service/hms/catalog/AGCHelp.html?page=AGC_appGalleryConnect_associated_service
+    // После включения Kits и добавления SHA256, скачайте agconnect-services.json и положите его в проект
+
+    // Если Android studio не видит ваше Huawei устройство - переключите его в режим соединения MTP (передача файлов)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.2.0"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
+
+    // для использования In-App-Purchase необходимо предварительно настроить Merchant Account Service,
+    // заполнив данные о банковском аккаунте и согласие на обработку персональных данных
+    // (предложение заполнить аккаунт появляется после активации IAP Kit, как активировать Kits см выше)
+    // после рассмотрения соответсвующий раздел APG(Мои приложения->[Имя приложения]->Разработка->In-App Purchases)
+    // станет активным и в нем появится раздел с PubKey, который нужно скопировать в файл Keys приложения
+    // Затем необходимо создать продукты с идентификаторами, описанными в файле Keys
+    // описание здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-product-information-v4
+    implementation 'com.huawei.hms:iap:4.0.2.300'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
+
+    // . . . . . . . . . . . . . . . . . . . . . . . .
+    // Размер самого kit / размер с зависимостями:
+    // Account Kit 168 KB / 616 KB
+    // Awareness Kit 158 KB / 581 KB
+    // Health Kit 269 KB / 684 KB
+    // Panorama Kit (panorama + panorama-local)  28 KB + 42 KB / 713 KB
+    // DTM 270 KB / 851 KB
+    // Site Kit 31 KB / 1578 KB
+    // Near By 138 KB / 714 KB
+    // ML Kit 835 KB / 323 KB?
+    // Identity Kit 9 KB / 538 KB
+    // FIDO Kit 53 KB / 833 KB
+    // Push Kit 111 KB / 631 KB
+    // In-App Purchases 66 KB / 604 KB
+    // Game Service 622 KB / 1467 KB
+    // Location Kit 91 KB / 625 KB
+    // Analytics Kit 119 KB / 961 KB
+    // Ads Kit (identifier) 6 KB / 93 KB
+    // Map Kit (maps + maps-base) 420 KB / 823 KB
+    // Drive Kit 587 KB / 868 KB
+    // Safe Detect Kit 16 KB / 703 KB
+    // Scan Kit 74 KB / 243 KB
+    // Wallet Kit 24 KB / 841 KB
+
+//    implementation 'com.huawei.hms:hwid:4.0.0.300'
+//    implementation 'com.huawei.hms:awareness:1.0.1.300'
+//    implementation 'com.huawei.hms:hihealth-base:4.0.0.350'
+//    implementation 'com.huawei.hms:panorama:4.0.1.300'
+//    implementation 'com.huawei.hms:panorama-local:4.0.1.300'
+//    implementation 'com.huawei.hms:hianalytics:4.0.0.300'
+//    implementation 'com.huawei.hms:dtm-api:4.0.1.300'
+//    implementation 'com.huawei.hms:site:4.0.0.300'
+//    implementation 'com.huawei.hms:nearby:4.0.1.300'
+//    implementation 'com.huawei.hms:ml-computer-vision:1.0.0.325'
+//    implementation 'com.huawei.hms:identity:4.0.1.300'
+//    implementation 'com.huawei.hms:fido:4.0.0.300'
+//    implementation 'com.huawei.hms:push:3.0.3.301'
+//   implementation 'com.huawei.hms:hianalytics:4.0.0.300'
+//    implementation 'com.huawei.agconnect:agconnect-crash:1.2.1.300'
+//    implementation 'com.huawei.hms:game:3.0.3.300'
+//    implementation 'com.huawei.hms:location:3.0.3.300'
+//    implementation 'com.huawei.hms:hms-ads-identifier:3.4.26.303'
+//    implementation 'com.huawei.hms:maps:3.0.2.301'
+//    implementation 'com.huawei.hms:drive:4.0.0.301'
+//    implementation 'com.huawei.hms:push:4.0.0.300'
+//    implementation 'com.huawei.hms:safetydetect:3.0.3.300'
+//    implementation 'com.huawei.hms:scan:1.0.3.301'
+//    implementation 'com.huawei.hms:wallet:2.0.0.300'
+
+}
+
+// необходимо разместить ключ в локальных свойствах проекта, не отслеживаемых VCS
+def getIAPKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("iapKey")
+}
+
+apply plugin: 'com.huawei.agconnect'
